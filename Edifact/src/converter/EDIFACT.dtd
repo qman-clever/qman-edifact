@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!ELEMENT edifact (service_string_advice?, interchange)>
+<!ELEMENT service_string_advice (component_data_element_separator,
+                                 data_element_separator, decimal_mark,
+                                 escape_character, segment_terminator)>
+<!ELEMENT interchange (interchange_header, ( functional_group+ | message+ ), interchange_trailer)>
+
+<!ELEMENT interchange_header (segment)>
+<!ELEMENT functional_group (functional_group_header, message+, functional_group_trailer)>
+<!ELEMENT interchange_trailer (segment)>
+<!ELEMENT functional_group_header (segment)>
+<!ELEMENT functional_group_trailer (segment)>
+<!ELEMENT message (message_header, message_data_segments, message_trailer)>
+<!ELEMENT message_header (segment)>
+<!ELEMENT message_data_segments (segment+)>
+<!ELEMENT message_trailer (segment)>
+<!ELEMENT segment (data_element+)>
+<!ELEMENT data_element (#PCDATA | component_data_element)* >
+<!ELEMENT component_data_element (#PCDATA) >
+<!ELEMENT component_data_element_separator (#PCDATA) >
+<!ELEMENT data_element_separator (#PCDATA) >
+<!ELEMENT decimal_mark (#PCDATA) >
+<!ELEMENT escape_character (#PCDATA) >
+<!ELEMENT segment_terminator (#PCDATA) >
+
+<!-- 
+I added an attribute to the message element, in order to identify 
+the type of message being transmitted; e.g., INVRPT, ORDERS.  I also
+made it optional, in case we don't need it.
+-->
+<!ATTLIST message type CDATA #IMPLIED>
+<!ATTLIST segment code CDATA #REQUIRED name CDATA #IMPLIED>
+<!ATTLIST data_element name CDATA #REQUIRED>
+<!ATTLIST component_data_element name CDATA #REQUIRED>
+ 
